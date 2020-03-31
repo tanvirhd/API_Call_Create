@@ -1,28 +1,51 @@
 package com.example.api_call_create.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.api_call_create.R;
+import com.example.api_call_create.adapter.EmployeeClassAdapter;
+import com.example.api_call_create.model.Employee;
+import com.example.api_call_create.model.ParentClass;
+import com.example.api_call_create.viewmodel.ViewModelEmployee;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG="MainActivity";
+
+    ViewModelEmployee viewModelEmployee;
+    List<Employee> allEmployee=new ArrayList<>();
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView=findViewById(R.id.recycler_view);
+
+        final EmployeeClassAdapter adapter=new EmployeeClassAdapter(this,allEmployee);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.setAdapter(adapter);
+
+        viewModelEmployee=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelEmployee.class);
+             viewModelEmployee.getAllEmployeeInfo().observe(this, new Observer<ParentClass>() {
+                 @Override
+                 public void onChanged(ParentClass parentClass) {
+                     allEmployee.addAll(parentClass.getData());
+                     adapter.notifyDataSetChanged();
+                     Log.d(TAG, "onChanged: size="+allEmployee.size());
+                 }
+             });
 
     }
 }
