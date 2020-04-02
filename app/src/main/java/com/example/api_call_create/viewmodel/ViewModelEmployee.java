@@ -21,7 +21,7 @@ public class ViewModelEmployee extends AndroidViewModel {
         { repositoryEmployee=new RepositoryEmployee(); }
     }
 
-    public LiveData<ParentClass>  getAllEmployeeInfo(){
+    public LiveData<List<Employee>>  getAllEmployeeInfo(){
         return repositoryEmployee.getEmployee();
     }
 

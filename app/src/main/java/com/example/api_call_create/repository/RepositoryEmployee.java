@@ -23,16 +23,16 @@ public class RepositoryEmployee {
         apiRequest=ApiClient.getApiInterface();
     }
 
-    public LiveData<ParentClass> getEmployee(){
-        final MutableLiveData<ParentClass> response=new MutableLiveData<>();
+    public LiveData<List<Employee>> getEmployee(){
+        final MutableLiveData<List<Employee>> response=new MutableLiveData<>();
         apiRequest.getAllEmployee()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ParentClass>() {
+                .subscribe(new Consumer<List<Employee>>() {
                     @Override
-                    public void accept(ParentClass parentClass) throws Exception {
-                        if(parentClass!=null)
-                            response.postValue(parentClass);
+                    public void accept(List<Employee> employees) throws Exception {
+                        if(employees!=null)
+                            response.postValue(employees);
                         else
                             response.postValue(null);
                     }

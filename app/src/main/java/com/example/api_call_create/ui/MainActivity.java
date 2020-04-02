@@ -38,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         viewModelEmployee=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelEmployee.class);
-             viewModelEmployee.getAllEmployeeInfo().observe(this, new Observer<ParentClass>() {
+             viewModelEmployee.getAllEmployeeInfo().observe(this, new Observer<List<Employee>>() {
                  @Override
-                 public void onChanged(ParentClass parentClass) {
-                     allEmployee.addAll(parentClass.getData());
+                 public void onChanged(List<Employee> employeeList) {
+                     adapter.isShimmer=false;
+                     allEmployee.addAll(employeeList);
                      adapter.notifyDataSetChanged();
-                     Log.d(TAG, "onChanged: size="+allEmployee.size());
+                     Log.d(TAG, "onChanged: size="+allEmployee.get(1).getEmail());
                  }
              });
 
