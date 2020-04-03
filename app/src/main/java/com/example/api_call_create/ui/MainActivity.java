@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Employee e = new Employee("163-15E4", "Minhajul", "Arefin", "mihaj@mail.com", "https://homepages.cae.wisc.edu/~ece533/images/fruits.png");
+        Employee e = new Employee("163-15E5", "Fuad", "Ragib", "fuad@mail.com", "https://homepages.cae.wisc.edu/~ece533/images/fruits.png");
 
         try {
             viewModelEmployee.addEmployee(e).observe(this, new Observer<Employee>() {

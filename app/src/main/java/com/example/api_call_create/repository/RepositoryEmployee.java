@@ -56,7 +56,8 @@ public class RepositoryEmployee {
                     @Override
                     public void accept(Employee employee) throws Exception {
                         Log.d("MyError", "accept: "+employee);
-                        //response.postValue(employee);
+                        response.postValue(employee);
+                        Log.d("RepositoryEmployee", "accept: message="+employee.getMessage());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
