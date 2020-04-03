@@ -1,6 +1,7 @@
 package com.example.api_call_create.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -23,6 +24,13 @@ public class ViewModelEmployee extends AndroidViewModel {
 
     public LiveData<List<Employee>>  getAllEmployeeInfo(){
         return repositoryEmployee.getEmployee();
+    }
+
+    public LiveData<Employee> addEmployee(Employee employee){
+        if(employee==null){
+            Log.d("ViewModelEmployee", "addEmployee: yes null");
+        }
+        return repositoryEmployee.addEmployee(employee);
     }
 
 }

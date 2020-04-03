@@ -7,6 +7,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface ApiInterface {
@@ -16,4 +17,7 @@ public interface ApiInterface {
 
     @POST("get_data.php/")
     Observable<List<Employee>> getAllEmployee();
+
+    @POST("insert_data.php/")
+    Observable<Employee> addEmployee(@Body Employee employee);
 }

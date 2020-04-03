@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         viewModelEmployee=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelEmployee.class);
-             viewModelEmployee.getAllEmployeeInfo().observe(this, new Observer<List<Employee>>() {
+
+        viewModelEmployee.getAllEmployeeInfo().observe(this, new Observer<List<Employee>>() {
                  @Override
                  public void onChanged(List<Employee> employeeList) {
                      adapter.isShimmer=false;
@@ -47,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
                      Log.d(TAG, "onChanged: size="+allEmployee.get(1).getEmail());
                  }
              });
+
+        Employee e=new Employee("163-15E4","Minhajul","Arefin","mihaj@mail.com","https://homepages.cae.wisc.edu/~ece533/images/fruits.png");
+        Log.d(TAG, "onCreate: viewModelEmployee is null=" + viewModelEmployee==null?"yes":"nop");
+        viewModelEmployee.addEmployee(e)
+                .observe(this, new Observer<Employee>() {
+                    @Override
+                    public void onChanged(Employee employee) {
+                        Log.d(TAG, "onChanged: "+employee.getMessage());
+                    }
+                });
 
     }
 }

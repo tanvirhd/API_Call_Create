@@ -39,11 +39,34 @@ public class RepositoryEmployee {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.d("RepositoryEmployee", "accept:=======> "+throwable);
+                        Log.d("RepositoryEmployee", "getEmployee() => "+throwable);
                     }
                 } );
 
         return response;
+    }
+
+    public LiveData<Employee> addEmployee(Employee employee){
+        final MutableLiveData<Employee> response =new MutableLiveData<>();
+        apiRequest.addEmployee(employee).observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Employee>() {
+                    @Override
+                    public void accept(Employee employee) throws Exception {
+                        if (employee != null) {
+                            Log.d("RepositoryEmployee", "accept: not null");
+                            response.postValue(employee);
+                        } else {
+                            response.postValue(null);
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.d("RepositoryEmployee", "addEmployee() => "+throwable);
+                    }
+                });
+        return null;
     }
 
 }

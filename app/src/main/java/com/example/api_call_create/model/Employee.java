@@ -80,6 +80,14 @@ public class Employee {
     @Expose
     private String url;
 
+    @SerializedName("message")
+    @Expose
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
     public String getId() {
         return id;
     }
@@ -117,6 +125,14 @@ public class Employee {
     }
 
     public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Employee(String id, String firstName, String lastName, String email, String url) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.url = url;
     }
 }
