@@ -16,6 +16,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class RepositoryEmployee {
     private ApiInterface apiRequest;
 
@@ -48,17 +50,13 @@ public class RepositoryEmployee {
 
     public LiveData<Employee> addEmployee(Employee employee){
         final MutableLiveData<Employee> response =new MutableLiveData<>();
-        apiRequest.addEmployee(employee).observeOn(Schedulers.io())
+        apiRequest.addEmployee(employee).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Employee>() {
                     @Override
                     public void accept(Employee employee) throws Exception {
-                        if (employee != null) {
-                            Log.d("RepositoryEmployee", "accept: not null");
-                            response.postValue(employee);
-                        } else {
-                            response.postValue(null);
-                        }
+                        Log.d("MyError", "accept: "+employee);
+                        //response.postValue(employee);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -66,7 +64,7 @@ public class RepositoryEmployee {
                         Log.d("RepositoryEmployee", "addEmployee() => "+throwable);
                     }
                 });
-        return null;
+        return response;
     }
 
 }

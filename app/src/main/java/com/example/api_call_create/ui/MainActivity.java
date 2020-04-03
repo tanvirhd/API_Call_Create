@@ -21,43 +21,48 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG="MainActivity";
+    private static final String TAG = "MainActivity";
 
     ViewModelEmployee viewModelEmployee;
-    List<Employee> allEmployee=new ArrayList<>();
+    List<Employee> allEmployee = new ArrayList<>();
     RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView=findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
 
-        final EmployeeClassAdapter adapter=new EmployeeClassAdapter(this,allEmployee);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        final EmployeeClassAdapter adapter = new EmployeeClassAdapter(this, allEmployee);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 
-        viewModelEmployee=new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelEmployee.class);
+        viewModelEmployee = new ViewModelProvider.AndroidViewModelFactory(getApplication()).create(ViewModelEmployee.class);
 
         viewModelEmployee.getAllEmployeeInfo().observe(this, new Observer<List<Employee>>() {
-                 @Override
-                 public void onChanged(List<Employee> employeeList) {
-                     adapter.isShimmer=false;
-                     allEmployee.addAll(employeeList);
-                     adapter.notifyDataSetChanged();
-                     Log.d(TAG, "onChanged: size="+allEmployee.get(1).getEmail());
-                 }
-             });
+            @Override
+            public void onChanged(List<Employee> employeeList) {
+                adapter.isShimmer = false;
+                allEmployee.addAll(employeeList);
+                adapter.notifyDataSetChanged();
+                Log.d(TAG, "onChanged: size=" + allEmployee.get(1).getEmail());
+            }
+        });
 
-        Employee e=new Employee("163-15E4","Minhajul","Arefin","mihaj@mail.com","https://homepages.cae.wisc.edu/~ece533/images/fruits.png");
-        Log.d(TAG, "onCreate: viewModelEmployee is null=" + viewModelEmployee==null?"yes":"nop");
-        viewModelEmployee.addEmployee(e)
-                .observe(this, new Observer<Employee>() {
-                    @Override
-                    public void onChanged(Employee employee) {
-                        Log.d(TAG, "onChanged: "+employee.getMessage());
-                    }
-                });
+        Employee e = new Employee("163-15E4", "Minhajul", "Arefin", "mihaj@mail.com", "https://homepages.cae.wisc.edu/~ece533/images/fruits.png");
+
+        try {
+            viewModelEmployee.addEmployee(e).observe(this, new Observer<Employee>() {
+                @Override
+                public void onChanged(Employee employee) {
+                      Log.d(TAG, "onChanged: "+employee.getMessage());
+                }
+            });
+        } catch (Exception E) {
+            for (StackTraceElement s : E.getStackTrace())
+                Log.d("MyError", "onCreate: " + s);
+        }
+
 
     }
 }

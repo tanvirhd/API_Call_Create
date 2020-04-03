@@ -14,23 +14,24 @@ import com.example.api_call_create.repository.RepositoryEmployee;
 import java.util.List;
 
 public class ViewModelEmployee extends AndroidViewModel {
-    public static RepositoryEmployee repositoryEmployee;
+    private static RepositoryEmployee repositoryEmployee;
 
     public ViewModelEmployee(@NonNull Application application) {
         super(application);
-        if(repositoryEmployee==null)
-        { repositoryEmployee=new RepositoryEmployee(); }
+        if (repositoryEmployee == null) {
+            repositoryEmployee = new RepositoryEmployee();
+        }
     }
 
-    public LiveData<List<Employee>>  getAllEmployeeInfo(){
+    public LiveData<List<Employee>> getAllEmployeeInfo() {
         return repositoryEmployee.getEmployee();
     }
 
-    public LiveData<Employee> addEmployee(Employee employee){
-        if(employee==null){
-            Log.d("ViewModelEmployee", "addEmployee: yes null");
-        }
-        return repositoryEmployee.addEmployee(employee);
+    public LiveData<Employee> addEmployee(Employee employee) {
+
+
+       return repositoryEmployee.addEmployee(employee);
+     // return null;
     }
 
 }
